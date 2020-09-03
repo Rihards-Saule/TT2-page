@@ -39,11 +39,39 @@ class User extends Authenticatable
 
     public function getAvatarAttribute()
     {
-       return "https://i.pravatar.cc/40?u=" . $this->email;
+       //return "https://i.pravatar.cc/40?u=" . $this->email;
+       return "/images/profile-pic-test.png";
     }
+
 
     public function timeline()
     {
-       return Post::where('user_id', $this->id)->latest()->get();
+       $friends = $this->follows()->pluck('id');
+
+       return Post::whereIn('user_id', $friends)
+          ->orWhere('user_id', $this->id)
+          ->latest()
+          ->get();
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+
+    }
+
+    public function follow(User $user)
+    {
+      return $this->follows()->save($user);
+    }
+
+
+    public function follows()
+    {
+      return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
+    }
+
+    public function GetRouteKeyName() //goes by name no id like default
+    {
+      return 'name';
     }
 }

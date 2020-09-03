@@ -6,7 +6,6 @@
       name="body"
       class="w-full"
       placeholder="Write here..."
-      required
     ></textarea>
 
     <hr class="my-4">
@@ -24,5 +23,8 @@
           Submit
       </button>
     </footer>
-
+  </form>
+  @error('body')
+    <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+  @enderror
 </div>

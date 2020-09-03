@@ -1,9 +1,9 @@
 <ul>
     <li><a
             class="font-bold text-lg mb-4 block"
-            href="/"
+            href="{{ route('home') }}"
         >Home</a></li>
-    <li><a
+    <!--<li><a
             class="font-bold text-lg mb-4 block"
             href="/"
         >Explore</a></li>
@@ -22,13 +22,19 @@
     <li><a
             class="font-bold text-lg mb-4 block"
             href="/"
-        >Lists</a></li>
+        >Lists</a></li>-->
     <li><a
             class="font-bold text-lg mb-4 block"
-            href="/"
+            href="{{ route('profile', auth()->user() )}}"
         >Profile</a></li>
     <li><a
             class="font-bold text-lg mb-4 block"
-            href="/"
-        >More</a></li>
+            href="{{ url('/logout') }}"
+            onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                Logout
+            </a></li>
+        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+            {{ csrf_field() }}
+        </form>
 </ul>
